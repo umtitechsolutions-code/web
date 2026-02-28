@@ -3,7 +3,7 @@
 ## ✅ What's Been Implemented
 
 ### 1. Team Updates
-- ✅ Updated team with: Muhammad Awais Laal, Yasir Abbas, Muhammad Saqib Qureshi, Sophia White, **Misha (NEW)**, Sarah
+- ✅ Updated team with: Muhammad Awais Laal, Yasir Abbas, Muhammad Saqib Qureshi, Kanwal Aftab, **Misha (NEW)**, Sarah
 - ✅ Removed old members
 
 ### 2. Meeting Booking System

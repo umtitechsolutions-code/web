@@ -32,8 +32,8 @@
     <meta name="format-detection" content="telephone=no">
 
     <!-- Business Information -->
-    <meta name="contact" content="team@umtitech.com">
-    <meta name="reply-to" content="team@umtitech.com">
+    <meta name="contact" content="umtitechsolutions@gmail.com">
+    <meta name="reply-to" content="umtitechsolutions@gmail.com">
     <meta name="category" content="Technology, Software Development, IT Services, Artificial Intelligence">
     <meta name="coverage" content="Worldwide">
     <meta name="target" content="all">
@@ -110,7 +110,7 @@
         "url": "https://www.umtitech.com",
         "logo": "https://www.umtitech.com/assets/images/umti-20tech-transparent-20-20only-20logo.png",
         "description": "UMTI Tech is the world's leading IT solutions and AI services provider, specializing in enterprise software development, custom AI chatbots, machine learning, and global digital transformation.",
-        "email": "team@umtitech.com",
+        "email": "umtitechsolutions@gmail.com",
         "telephone": "+92-343-8688284",
         "address": {
             "@type": "PostalAddress",
@@ -380,7 +380,7 @@
                         serif: ['Montserrat', 'serif'],
                     },
                     animation: {
-                        'marquee': 'marquee 30s linear infinite',
+                        'marquee': 'marquee 60s linear infinite',
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'typing': 'typing 1.4s infinite ease-in-out',
                     },
@@ -594,6 +594,16 @@
     <section id="hero"
         class="min-h-[50vh] md:min-h-[85vh] pt-48 pb-8 md:pt-48 md:pb-8 relative overflow-hidden bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-pink-50/50 transition-colors duration-1000 flex items-center">
         <!-- Background Elements -->
+        <!-- Hero navigation arrows and dots -->
+        <div class="absolute inset-0 flex items-center justify-between px-4 z-20 pointer-events-none">
+            <button id="hero-prev" class="pointer-events-auto p-3 bg-white/30 rounded-full hover:bg-white/50 transition-colors">
+                <i data-lucide="chevron-left" class="w-6 h-6"></i>
+            </button>
+            <button id="hero-next" class="pointer-events-auto p-3 bg-white/30 rounded-full hover:bg-white/50 transition-colors">
+                <i data-lucide="chevron-right" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <div id="hero-dots" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-20"></div>
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div
                 class="absolute -top-1/2 -right-1/4 w-full h-full bg-gradient-to-br from-blue-400/20 to-transparent rounded-full blur-3xl animate-pulse-slow">
@@ -678,7 +688,7 @@
                 </h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                     With a vision for global reach—our campus is coming soon to Queens,
-                    New York, USA. We bridge continents to deliver world-class technology solutions and education.
+                    New York, USA. As a full-service Digital Agency, we bridge continents to deliver world-class technology solutions and education.
                 </p>
             </div>
 
@@ -1315,7 +1325,7 @@
                         </div>
                         <div class="mt-8 pt-8 border-t border-gray-200">
                             <p class="font-semibold mb-2">Prefer to contact directly?</p>
-                            <p class="text-sm text-gray-600">Email: team@umtitech.com | Phone: +1 (347) 555-0123</p>
+                            <p class="text-sm text-gray-600">Email: <a href="mailto:umtitechsolutions@gmail.com" class="hover:text-blue-400">umtitechsolutions@gmail.com</a> | Phone: +1 (347) 555-0123</p>
                             <p class="text-sm text-gray-600">Location: Coming Soon to Queens, New York, USA</p>
                         </div>
                     </div>
@@ -1622,7 +1632,7 @@
                         </li>
                         <li class="flex gap-3 text-sm"><i data-lucide="mail"
                                 class="w-5 h-5 text-blue-400 flex-shrink-0"></i>
-                            <a href="mailto:team@umtitech.com" class="hover:text-blue-400">team@umtitech.com</a>
+                            <a href="mailto:umtitechsolutions@gmail.com" class="hover:text-blue-400">umtitechsolutions@gmail.com</a>
                         </li>
                         <li class="flex gap-3 text-sm"><i data-lucide="phone"
                                 class="w-5 h-5 text-blue-400 flex-shrink-0"></i>
@@ -1814,7 +1824,7 @@
         </div>
 
         <!-- Loading Animation -->
-        <script src="js/loader.js"></script>
+        <!-- loader removed from index to preserve first impression -->
         <script src="js/api-config.js"></script>
         <script src="js/utils/portal-api.js"></script>
         <script src="js/main.js"></script>

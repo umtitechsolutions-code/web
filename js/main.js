@@ -983,7 +983,7 @@ At UMTI Tech Solutions, we stay at the forefront of these trends, ensuring our c
             fullContent: `Decisions based on gut feeling are a thing of the past. In 2026, predictive analytics allows businesses to see around corners and anticipate market shifts before they happen.<br><br>
             <strong>Turning Data into Gold</strong><br><br>
             By synthesizing vast amounts of customer data, businesses can predict churn, optimize pricing in real-time, and target marketing spend with pinpoint accuracy, leading to massive improvements in ROI.`,
-            author: "Sophia White",
+            author: "Kanwal Aftab",
             date: "December 28, 2025",
             readTime: "8 min read",
             category: "AI Solutions",
@@ -1061,7 +1061,7 @@ At UMTI Tech Solutions, we stay at the forefront of these trends, ensuring our c
             fullContent: `While general-purpose AI is impressive, niche business applications require specialized knowledge. Fine-tuning models on your own proprietary data is the key to unlocking true AI value for your enterprise.<br><br>
             <strong>Expertise as a Service</strong><br><br>
             Whether it's legal, medical, or highly technical engineering domains, a fine-tuned LLM can provide insights and assistance that far surpass general models, making it an indispensable tool for your expert teams.`,
-            author: "Sophia White",
+            author: "Kanwal Aftab",
             date: "December 08, 2025",
             readTime: "9 min read",
             category: "AI Research",
@@ -1139,7 +1139,7 @@ At UMTI Tech Solutions, we stay at the forefront of these trends, ensuring our c
             fullContent: `Computer vision is becoming a critical tool in modern medicine. By analyzing X-rays, MRIs, and CT scans, AI systems can spot anomalies that human eyes might miss, leading to earlier detection and better patient outcomes.<br><br>
             <strong>Augmenting Human Expertise</strong><br><br>
             AI isn't here to replace doctors; it's here to give them superpowers. By handling the initial screening and highlighting areas of concern, AI allows medical professionals to focus their expertise where it's needed most.`,
-            author: "Sophia White",
+            author: "Kanwal Aftab",
             date: "November 18, 2025",
             readTime: "9 min read",
             category: "AI Solutions",
@@ -1367,7 +1367,7 @@ At UMTI Tech Solutions, we stay at the forefront of these trends, ensuring our c
             image: "assets/images/habib.png"
         },
         {
-            name: "Sophia White",
+            name: "Kanwal Aftab",
             role: "Lead AI Researcher",
             bio: "Pioneering our AI initiatives with cutting-edge research in machine learning and neural networks.",
             image: "assets/images/sophia-white.png"
@@ -1426,11 +1426,19 @@ At UMTI Tech Solutions, we stay at the forefront of these trends, ensuring our c
         function updateHero(index) {
             const slide = heroSlides[index];
 
-            // Animate Out
+            // update dots if present
+            if (heroDots) {
+                refreshHeroDots(index);
+            }
+
+            // slide out left
+            heroContent.style.transition = 'transform 0.5s ease, opacity 0.5s';
+            heroImgContainer.style.transition = 'transform 0.5s ease, opacity 0.5s';
+
+            heroContent.style.transform = 'translateX(-100%)';
             heroContent.style.opacity = '0';
-            heroContent.style.transform = 'translateY(10px)'; // Subtler movement
+            heroImgContainer.style.transform = 'translateX(-100%) scale(0.98)';
             heroImgContainer.style.opacity = '0';
-            heroImgContainer.style.transform = 'scale(0.98)';
 
             setTimeout(() => {
                 // Update Content
@@ -1450,14 +1458,25 @@ At UMTI Tech Solutions, we stay at the forefront of these trends, ensuring our c
 
                 lucide.createIcons();
 
-                // Animate In
-                setTimeout(() => {
-                    heroContent.style.opacity = '1';
-                    heroContent.style.transform = 'translateY(0)';
-                    heroImgContainer.style.opacity = '1';
-                    heroImgContainer.style.transform = 'scale(1)';
-                }, 50); // Minor delay to ensure styles are applied
-            }, 400); // Reduced from 700ms for snappier/smoother transition
+                // position offscreen right
+                heroContent.style.transition = 'none';
+                heroImgContainer.style.transition = 'none';
+                heroContent.style.transform = 'translateX(100%)';
+                heroImgContainer.style.transform = 'translateX(100%) scale(0.98)';
+                heroContent.style.opacity = '0';
+                heroImgContainer.style.opacity = '0';
+
+                // force reflow
+                void heroContent.offsetWidth;
+
+                // slide in
+                heroContent.style.transition = 'transform 0.5s ease, opacity 0.5s';
+                heroImgContainer.style.transition = 'transform 0.5s ease, opacity 0.5s';
+                heroContent.style.transform = 'translateX(0)';
+                heroContent.style.opacity = '1';
+                heroImgContainer.style.transform = 'translateX(0) scale(1)';
+                heroImgContainer.style.opacity = '1';
+            }, 500); // wait for slide-out
         }
 
         setInterval(() => {
@@ -1465,6 +1484,54 @@ At UMTI Tech Solutions, we stay at the forefront of these trends, ensuring our c
             updateHero(currentHeroIndex);
         }, 7000);
     }
+
+    // Hero navigation helpers (arrows, dots, swipe)
+    const heroPrev = document.getElementById('hero-prev');
+    const heroNext = document.getElementById('hero-next');
+    const heroDots = document.getElementById('hero-dots');
+
+    function refreshHeroDots(active = 0) {
+        if (!heroDots) return;
+        heroDots.innerHTML = heroSlides.map((_, i) =>
+            `<div class="w-2.5 h-2.5 rounded-full bg-white/50 cursor-pointer ${i === active ? 'bg-white' : ''}" data-index="${i}"></div>`
+        ).join('');
+        heroDots.querySelectorAll('div').forEach(d => {
+            d.addEventListener('click', () => {
+                currentHeroIndex = parseInt(d.dataset.index);
+                updateHero(currentHeroIndex);
+            });
+        });
+    }
+
+    if (heroPrev) {
+        heroPrev.addEventListener('click', () => {
+            currentHeroIndex = (currentHeroIndex - 1 + heroSlides.length) % heroSlides.length;
+            updateHero(currentHeroIndex);
+        });
+    }
+    if (heroNext) {
+        heroNext.addEventListener('click', () => {
+            currentHeroIndex = (currentHeroIndex + 1) % heroSlides.length;
+            updateHero(currentHeroIndex);
+        });
+    }
+    if (heroDots) {
+        refreshHeroDots();
+    }
+
+    // simple swipe support
+    let touchStartX = 0;
+    heroSection.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+    heroSection.addEventListener('touchend', e => {
+        const delta = e.changedTouches[0].clientX - touchStartX;
+        if (delta > 50) {
+            currentHeroIndex = (currentHeroIndex - 1 + heroSlides.length) % heroSlides.length;
+            updateHero(currentHeroIndex);
+        } else if (delta < -50) {
+            currentHeroIndex = (currentHeroIndex + 1) % heroSlides.length;
+            updateHero(currentHeroIndex);
+        }
+    });
 
     // ==========================================
     // TEAM CAROUSEL
@@ -1494,32 +1561,32 @@ At UMTI Tech Solutions, we stay at the forefront of these trends, ensuring our c
         lucide.createIcons();
 
         function updateTeamCarousel() {
-            // Calculate item width based on viewport
-            const width = window.innerWidth >= 1024 ? 33.33 : (window.innerWidth >= 768 ? 50 : 100);
-            teamTrack.style.transform = `translateX(-${currentTeamIndex * width}%)`;
+            // slide one card at a time regardless of viewport size
+            const slide = teamTrack.children[0];
+            if (!slide) return;
+            const slideWidth = slide.getBoundingClientRect().width;
+            const containerWidth = teamTrack.parentElement.getBoundingClientRect().width;
+            const percent = (slideWidth / containerWidth) * 100;
+            teamTrack.style.transform = `translateX(-${currentTeamIndex * percent}%)`;
         }
 
         document.getElementById('team-next').addEventListener('click', () => {
-            if (currentTeamIndex < teamMembers.length - 1) {
-                currentTeamIndex++;
-                updateTeamCarousel();
-            } else {
-                currentTeamIndex = 0;
-                updateTeamCarousel();
-            }
+            currentTeamIndex = (currentTeamIndex + 1) % teamMembers.length;
+            updateTeamCarousel();
         });
 
         document.getElementById('team-prev').addEventListener('click', () => {
-            if (currentTeamIndex > 0) {
-                currentTeamIndex--;
-                updateTeamCarousel();
-            }
+            currentTeamIndex = (currentTeamIndex - 1 + teamMembers.length) % teamMembers.length;
+            updateTeamCarousel();
         });
 
         setInterval(() => {
-            currentTeamIndex = (currentTeamIndex + 1) % (teamMembers.length - 2);
+            currentTeamIndex = (currentTeamIndex + 1) % teamMembers.length;
             updateTeamCarousel();
         }, 5000);
+
+        // recalc slide position when window resizes
+        window.addEventListener('resize', updateTeamCarousel);
     }
 
 

@@ -247,7 +247,7 @@
 ## 📞 Support & Resources
 
 ### Need Help?
-- SEO Consultation: team@umtitech.com
+- SEO Consultation: umtitechsolutions@gmail.com
 - Technical Support: Available 24/7
 - Content Writing: In-house team available
 
