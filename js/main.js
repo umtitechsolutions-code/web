@@ -1300,10 +1300,10 @@ At UMTI Tech Solutions, we stay at the forefront of these trends, ensuring our c
         {
             pillText: "AI-Powered Business Scaling",
             pillIcon: "sparkles",
-            titleLine1: "AI-Powered Software That",
-            titleLine2: "Scales Your Business",
+            titleLine1: "AI Software That",
+            titleLine2: "Drives Measurable Growth",
             titleGradient: "from-blue-600 via-purple-600 to-pink-600",
-            description: "From AI agents to enterprise management systems — we design, build and operate secure web & mobile platforms that increase revenue and reduce costs.",
+            description: "We build AI-driven products that boost revenue, cut costs, and accelerate time-to-market — trusted by startups and enterprises alike.",
             primaryBtn: "Get a Free Technical Audit",
             primaryLink: "#contact",
             secondaryBtn: "View Portfolio",
@@ -1312,34 +1312,44 @@ At UMTI Tech Solutions, we stay at the forefront of these trends, ensuring our c
             bgGradient: "from-blue-50/50 via-purple-50/30 to-pink-50/50"
         },
         {
-            pillText: "Global Tech Solutions",
+            pillText: "Scale Globally",
             pillIcon: "globe",
-            titleLine1: "Scaling Innovations",
-            titleLine2: "Across Borders",
+            titleLine1: "Launch Secure,",
+            titleLine2: "Enterprise-Grade Platforms",
             titleGradient: "from-emerald-600 via-teal-600 to-cyan-600",
-            description: "From automated AI agents to complex management systems, we build scalable technology that powers businesses worldwide.",
+            description: "From AI agents to complex management systems — secure, scalable solutions that power international growth and operational efficiency.",
             primaryBtn: "Our Services",
             primaryLink: "#services",
             secondaryBtn: "View Portfolio",
             secondaryLink: "#portfolio",
-            image: "assets/images/hero-slide-2.png", // Ensure this exists or fallback
+            image: "assets/images/hero-slide-2.png",
             bgGradient: "from-emerald-50/50 via-teal-50/30 to-cyan-50/50"
         },
         {
-            pillText: "Industry Experts",
+            pillText: "Expert-Led Delivery",
             pillIcon: "book-open",
-            titleLine1: "Led by World-Class",
-            titleLine2: "Tech Professionals",
+            titleLine1: "Product Teams",
+            titleLine2: "That Ship Results",
             titleGradient: "from-amber-600 via-orange-600 to-red-600",
-            description: "Our team of seasoned experts delivers robust, scalable, and innovative solutions tailored to your business needs.",
+            description: "Experienced teams combining product thinking and engineering craft to deliver measurable outcomes and lasting value.",
             primaryBtn: "See Our Work",
             primaryLink: "#portfolio",
             secondaryBtn: "Meet The Team",
             secondaryLink: "#team",
-            image: "assets/images/hero-slide-3.png", // Ensure this exists
+            image: "assets/images/hero-slide-3.png",
             bgGradient: "from-amber-50/50 via-orange-50/30 to-red-50/50"
         }
     ];
+
+    // Preload hero images so transitions don't wait on network
+    (function preloadHeroImages() {
+        heroSlides.forEach(s => {
+            if (s && s.image) {
+                const i = new Image();
+                i.src = s.image;
+            }
+        });
+    })();
 
     const teamMembers = [
         {
@@ -1453,29 +1463,34 @@ At UMTI Tech Solutions, we stay at the forefront of these trends, ensuring our c
                 heroBtnPrimary.innerHTML = `${slide.primaryBtn} <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>`;
                 heroBtnSecondary.textContent = slide.secondaryBtn;
                 heroBtnSecondary.href = slide.secondaryLink;
-                heroImg.src = slide.image;
-                heroImg.className = `relative z-10 drop-shadow-2xl origin-center transition-transform duration-700 ${index === 2 ? "scale-150" : "scale-125"}`;
+                // load image into an offscreen loader first to avoid flashes
+                const loaderImg = new Image();
+                loaderImg.src = slide.image;
+                loaderImg.onload = () => {
+                    heroImg.src = slide.image;
+                    heroImg.className = `relative z-10 drop-shadow-2xl origin-center transition-transform duration-700 ${index === 2 ? "scale-150" : "scale-125"}`;
 
-                lucide.createIcons();
+                    lucide.createIcons();
 
-                // position offscreen right
-                heroContent.style.transition = 'none';
-                heroImgContainer.style.transition = 'none';
-                heroContent.style.transform = 'translateX(100%)';
-                heroImgContainer.style.transform = 'translateX(100%) scale(0.98)';
-                heroContent.style.opacity = '0';
-                heroImgContainer.style.opacity = '0';
+                    // position offscreen right
+                    heroContent.style.transition = 'none';
+                    heroImgContainer.style.transition = 'none';
+                    heroContent.style.transform = 'translateX(100%)';
+                    heroImgContainer.style.transform = 'translateX(100%) scale(0.98)';
+                    heroContent.style.opacity = '0';
+                    heroImgContainer.style.opacity = '0';
 
-                // force reflow
-                void heroContent.offsetWidth;
+                    // force reflow
+                    void heroContent.offsetWidth;
 
-                // slide in
-                heroContent.style.transition = 'transform 0.5s ease, opacity 0.5s';
-                heroImgContainer.style.transition = 'transform 0.5s ease, opacity 0.5s';
-                heroContent.style.transform = 'translateX(0)';
-                heroContent.style.opacity = '1';
-                heroImgContainer.style.transform = 'translateX(0) scale(1)';
-                heroImgContainer.style.opacity = '1';
+                    // slide in
+                    heroContent.style.transition = 'transform 0.5s ease, opacity 0.5s';
+                    heroImgContainer.style.transition = 'transform 0.5s ease, opacity 0.5s';
+                    heroContent.style.transform = 'translateX(0)';
+                    heroContent.style.opacity = '1';
+                    heroImgContainer.style.transform = 'translateX(0) scale(1)';
+                    heroImgContainer.style.opacity = '1';
+                };
             }, 500); // wait for slide-out
         }
 
